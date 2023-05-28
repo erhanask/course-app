@@ -1,10 +1,18 @@
 // Exports
 const express = require('express');
+const mongoose = require('mongoose');
 const pageRoutes = require('./routes/pageRoutes');
+const courseRoutes = require('./routes/courseRoutes');
 
 // Defining Variables
 const app = express();
 const port = 3000;
+
+// Database Connection
+main().catch(err => console.log(err));
+async function main() {
+    await mongoose.connect('mongodb://127.0.0.1:27017/course-cms');
+}
 
 
 // Middleware
@@ -13,7 +21,8 @@ app.use((req, res, next) => {
     res.locals.current_path = req.path;
     next();
 })
-
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
 
 // View Engine
 app.set('view engine', 'ejs');
@@ -25,6 +34,7 @@ app.use(express.static('public'));
 
 // Routes
 app.use('/', pageRoutes);
+app.use('/course', courseRoutes );
 
 // Start Connection
 app.listen(port, () => {
