@@ -34,7 +34,7 @@ app.use(express.static('public'));
 
 // Routes
 app.use('/', pageRoutes);
-app.use('/course', courseRoutes );
+app.use('/courses', courseRoutes );
 
 // Start Connection
 app.listen(port, () => {

@@ -15,3 +15,18 @@ exports.createCourse = async (req, res) => {
         });
     }
 }
+
+exports.getAllCourses = async (req, res) => {
+    try {
+        const courses = await Course.find();
+        res.render('courses', {
+            title: 'Courses',
+            courses: courses
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: 'fail',
+            message: err.message
+        });
+    }
+}
