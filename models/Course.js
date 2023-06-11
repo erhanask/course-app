@@ -39,7 +39,7 @@ const courseSchema = new Schema({
             default: true
         },
         category: {
-            type: Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Category'
         }
     },

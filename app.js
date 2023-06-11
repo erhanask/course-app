@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const pageRoutes = require('./routes/pageRoutes');
 const courseRoutes = require('./routes/courseRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 // Defining Variables
 const app = express();
@@ -35,6 +36,7 @@ app.use(express.static('public'));
 // Routes
 app.use('/', pageRoutes);
 app.use('/courses', courseRoutes );
+app.use('/categories', categoryRoutes );
 
 // Start Connection
 app.listen(port, () => {
