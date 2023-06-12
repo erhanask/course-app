@@ -1,9 +1,11 @@
-
-
 exports.getIndex = (req, res) => {
     res.render('index');
 };
 
 exports.getAbout = (req, res) => {
     res.render('about');
+}
+
+exports.getLogin = (req, res) => {
+    res.render('login');
 }
