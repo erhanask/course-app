@@ -18,7 +18,6 @@ const userSchema = new Schema({
         password: {
             type: String,
             required: true,
-            trim: true
         },
     },
     {
@@ -26,14 +25,18 @@ const userSchema = new Schema({
     });
 
 
-userSchema.pre('save',  (next) => {
+userSchema.pre('save', function (next) {
     const user = this;
-    // TODO : Fix hash password
-    bcrypt.hash(user.password, 10, (error, hash) => {
-        user.password = hash;
-        console.log(error);
-        next();
-    })
+    if (!user.isModified('password')) return next();
+
+    bcrypt.genSalt(10, function (err, salt) {
+        if (err) return next(err);
+        bcrypt.hash(user.password, salt, function (err, hash) {
+            if (err) return next(err);
+            user.password = hash;
+            next();
+        });
+    });
 });
 
 const User = mongoose.model('User', userSchema);
