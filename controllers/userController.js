@@ -35,11 +35,12 @@ exports.loginUser = async (req, res) => {
             throw new Error('Password is not correct');
         }
 
+        req.session.user = user;
+
         res.status(200).json({
             status: 'success',
             data: user
         });
-
     } catch (err) {
      res.status(400).json({
             status: 'fail',
