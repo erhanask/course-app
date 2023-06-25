@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const mongoStore = require('connect-mongo');
 const pageRoutes = require('./routes/pageRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
@@ -24,7 +25,8 @@ app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }
+    cookie: { secure: false },
+    store: mongoStore.create({ mongoUrl: 'mongodb://127.0.0.1:27017/course-cms' })
 }))
 app.use((req, res, next) => {
     // getting the current path for use in the views
