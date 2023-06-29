@@ -1,7 +1,9 @@
 <div class="collapse navbar-collapse" id="navbars-host">
     <ul class="navbar-nav ml-auto">
         <% if (typeof user !== "undefined") { %>
-            <li class="nav-item"><a class="nav-link" href="/">Welcome <%= user.name %></a></li>
+            <li class="nav-item <%= current_path === '/user/dashboard' ? 'active' : '' %>">
+                <a class="nav-link" href="/user/dashboard">Welcome <%= user.name %></a>
+            </li>
         <% } %>
         <li class="nav-item <%= current_path === '/' ? 'active' : '' %>">
             <a class="nav-link" href="/">Home</a>
