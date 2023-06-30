@@ -4,3 +4,12 @@ exports.auth = (req, res, next) => {
     }
     next();
 };
+
+exports.role = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.session.user.role)) {
+            return res.redirect('/');
+        }
+        next();
+    }
+}

@@ -1,5 +1,13 @@
+const Category = require("../models/Category");
+
+exports.index = async (req, res) => {
+    let params = {}
+
+    if (req.session.user.role === 'teacher') {
+        let categories = await Category.find();
+        params = {...params, categories};
+    }
 
 
-exports.index = (req, res) => {
-    res.render('dashboard');
+    res.render('dashboard', params);
 }
