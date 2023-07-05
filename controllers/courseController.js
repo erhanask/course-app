@@ -30,6 +30,18 @@ exports.getAllCourses = async (req, res) => {
         if(categorySlug) {
             filter = {category:category._id}
         }
+
+        // search query
+        if (req.query.search_k) {
+            filter = {
+                ...filter,
+                title: {
+                    $regex: '.*' + req.query.search_k + '.*',
+                    $options: 'i'
+                }
+            }
+        }
+
         const courses = await Course.find(filter).populate('user');
         res.render('courses', {
             title: 'Courses',
@@ -70,6 +82,27 @@ exports.enrollCourse = async (req, res) => {
             status: 'success',
             data: user,
             message: 'Course enrolled successfully'
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({
+            status: 'fail',
+            message: err.message
+        });
+    }
+}
+
+exports.leaveCourse = async (req, res) => {
+    try {
+        const user = await User.findById(req.session.user._id);
+        const { id } = req.body;
+        user.courses.pull({_id: id});
+        await user.save();
+
+        res.status(200).json({
+            status: 'success',
+            data: user,
+            message: 'Course left successfully'
         });
     } catch (err) {
         console.log(err);

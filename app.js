@@ -28,6 +28,8 @@ app.use(session({
     cookie: { secure: false },
     store: mongoStore.create({ mongoUrl: 'mongodb://127.0.0.1:27017/course-cms' })
 }))
+
+// TODO: URGENT: Fix the session issue for enroll and leave course actions
 app.use((req, res, next) => {
     // getting the current path for use in the views
     res.locals.current_path = req.path;

@@ -34,13 +34,22 @@
                                     </ul>
                                 </div>
                                 <% } %>
-                                <% if (user.role !== 'teacher') { %>
-                                    <div class="course-meta-bot text-center">
-                                        <form action="/courses/enroll" method="POST">
-                                            <input type="hidden" name="id" value="<%= courses[i]._id %>" />
-                                            <button type="submit" class="btn btn-warning">Enroll</button>
-                                        </form>
-                                    </div>
+                                <% if (typeof user !== 'undefined' && user.role !== 'teacher') { %>
+                                    <% if (user.courses.includes(courses[i]._id.toString())) { %>
+                                        <div class="course-meta-bot text-center">
+                                            <form action="/courses/leave" method="POST">
+                                                <input type="hidden" name="id" value="<%= courses[i]._id %>"/>
+                                                <button type="submit" class="btn btn-danger">Leave Course</button>
+                                            </form>
+                                        </div>
+                                    <% } else { %>
+                                        <div class="course-meta-bot text-center">
+                                            <form action="/courses/enroll" method="POST">
+                                                <input type="hidden" name="id" value="<%= courses[i]._id %>"/>
+                                                <button type="submit" class="btn btn-warning">Enroll Now</button>
+                                            </form>
+                                        </div>
+                                    <% } %>
                                 <% } %>
                             </div>
                         </div>
@@ -50,18 +59,8 @@
 
             </div><!-- end col -->
             <div class="col-lg-3 col-12 right-single">
-                <div class="widget-search">
-                    <div class="site-search-area">
-                        <form method="get" id="site-searchform" action="#">
-                            <div>
-                                <input class="input-text form-control" name="search-k" id="search-k"
-                                       placeholder="Search keywords..." type="text">
-                                <input id="searchsubmit" value="Search" type="submit">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <%- include('partials/category-menu'); %>
+                <%- include('partials/sidebar/search'); %>
+                <%- include('partials/sidebar/category-menu'); %>
             </div>
         </div><!-- end row -->
     </div><!-- end container -->
