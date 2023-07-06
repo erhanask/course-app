@@ -12,6 +12,16 @@
                 <p class="lead">Let us give you more details about the special offer website you want us. Please fill out the form below. <br>We have million of website owners who happy to work with us!</p>
             </div><!-- end title -->
 
+                <% if (flashMessages && flashMessages.success) { %>
+                    <div class="alert alert-success">
+                        <%= flashMessages.success %>
+                    </div>
+                <% } else if (flashMessages && flashMessages.error) { %>
+                    <div class="alert alert-danger">
+                        <%= flashMessages.error %>
+                    </div>
+                <% } %>
+
             <div class="row">
                 <div class="col-xl-12 col-md-12 col-sm-12">
                     <div class="contact_form">

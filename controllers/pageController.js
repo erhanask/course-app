@@ -36,15 +36,23 @@ exports.sendContact = async (req, res) => {
 
     try {
         await transport.sendMail(mailOptions);
-        res.status(200).json({
-            status: 'success',
-            message: 'Message sent successfully'
-        });
+        req.flash('success', 'Message sent successfully');
+
+        // TODO: We will check if response is json or html later
+        res.redirect('/contact');
+        // res.status(200).json({
+        //     status: 'success',
+        //     message: 'Message sent successfully'
+        // });
     } catch (err) {
+        req.flash('error', 'Message not sent!');
         console.log(err);
-        res.status(400).json({
-            status: 'fail',
-            message: err.message
-        });
+        // TODO: We will check if response is json or html later
+        res.redirect('/contact');
+        // res.status(400).json({
+        //     status: 'fail',
+        //     message: err.message
+        // });
+
     }
 }

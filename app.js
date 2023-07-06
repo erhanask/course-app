@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const flash = require('connect-flash');
 const session = require('express-session');
 const mongoStore = require('connect-mongo');
 const pageRoutes = require('./routes/pageRoutes');
@@ -21,6 +22,7 @@ async function main() {
 
 
 // Middleware
+app.use(flash());
 app.use(express.json());
 app.use(session({
     secret: 'keyboard cat',
@@ -38,6 +40,8 @@ app.use((req, res, next) => {
         res.locals.user = req.session.user;
         console.log(res.locals.user)
     }
+    // setting the flash messages to locals
+    res.locals.flashMessages = req.flash();
     next();
 })
 app.use(express.urlencoded({extended: false}));
