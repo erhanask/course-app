@@ -1,6 +1,7 @@
 // Exports
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config();
 const session = require('express-session');
 const mongoStore = require('connect-mongo');
 const pageRoutes = require('./routes/pageRoutes');

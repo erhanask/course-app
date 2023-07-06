@@ -9,5 +9,7 @@ const redirectMiddleware = require('../middlewares/redirect');
 router.get('/', pageController.getIndex);
 router.get('/about', pageController.getAbout);
 router.get('/login', redirectMiddleware.redirect, pageController.getLogin);
+router.get('/contact', pageController.getContact);
+router.post('/contact', pageController.sendContact);
 
 module.exports = router;
