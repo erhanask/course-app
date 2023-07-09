@@ -5,10 +5,11 @@ const router = express.Router();
 
 // Middlewares
 const authMiddleware = require('../middlewares/auth');
+const userValidator = require('../validators/userValidator');
 
 // Routes
 // Authentication Routes
-router.post('/create', userController.createUser);
+router.post('/create',userValidator.create(), userController.createUser);
 router.post('/login', userController.loginUser);
 router.get('/logout', userController.logoutUser);
 
