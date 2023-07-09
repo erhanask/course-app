@@ -19,17 +19,20 @@
                         <h5>Your role is: <%= user.role %></h5>
                         <p class="author_det">
                             You are a member since:
-                            <%= Intl.DateTimeFormat('en-EN', { year: 'numeric', month: 'long', day: '2-digit'})
+                            <%= Intl.DateTimeFormat('en-EN', {year: 'numeric', month: 'long', day: '2-digit'})
                                     .format(new Date(user.createdAt)) %>
                         </p>
                         <% if(user.role === 'teacher') { %>
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#exampleModal">
+                            <button type="button" class="btn btn-link btn-sm" data-toggle="modal"
+                                    data-target="#exampleModal">
                                 Create Course
                             </button>
 
+                            <!-- TODO: Create and update modal will be used jointly -->
                             <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <form method="post" action="/courses/create" class="modal-content">
                                         <input type="hidden" value="<%= user._id %>" name="user"/>
@@ -42,15 +45,18 @@
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="title">Title:*</label>
-                                                <input type="text" id="title" name="title" class="form-control" required>
+                                                <input type="text" id="title" name="title" class="form-control"
+                                                       required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="short_description">Short Description:*</label>
-                                                <textarea id="short_description" name="short_description" class="form-control" required></textarea>
+                                                <textarea id="short_description" name="short_description"
+                                                          class="form-control" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="long_description">Long Description:*</label>
-                                                <textarea id="long_description" name="long_description" class="form-control" required></textarea>
+                                                <textarea id="long_description" name="long_description"
+                                                          class="form-control" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="price">Price:</label>
@@ -68,7 +74,8 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
                                             <input type="submit" class="btn btn-primary" value="Create New"/>
                                         </div>
                                     </form>
@@ -85,71 +92,99 @@
             </div><!-- end col -->
         </div><!-- end row -->
         <div class="row mt-5">
-            <div class="col-lg-6 col-md-6 col-12">
-                <div class="course-item mb-5">
-                    <div class="image-blog">
-                        <img src="images/blog_1.jpg" alt="" class="img-fluid">
-                    </div>
-                    <div class="course-br">
-                        <div class="course-title">
-                            <h2><a href="course-single.html" title="">Engineering</a></h2>
+            <% if(user.role === 'teacher') { %>
+                <% for (let i = 0; i < courses.length; i++) { %>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="course-item mb-5">
+                        <div class="image-blog">
+                            <img src="images/blog_1.jpg" alt="" class="img-fluid">
                         </div>
-                        <div class="course-desc">
-                            <p>Lorem ipsum door sit amet, fugiat deicata avise id cum, no quo maiorum intel ogrets
-                                geuiat operts elicata libere avisse id cumlegebat, liber regione eu sit.... </p>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- end col -->
+                        <div class="course-br">
+                            <div class="course-title">
+                                <h2><a href="/courses/<%- courses[i].slug %>" title=""><%- courses[i].title %></a></h2>
+                            </div>
+                            <div class="course-desc">
+                                <p><%- courses[i].short_description %></p>
+                            </div>
+                            <div class="course-actions">
+                                <div class="clearfix">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#updateModal<%=i%>">
+                                                Update Course
+                                            </button>
 
-            <div class="col-lg-6 col-md-6 col-12">
-                <div class="course-item mb-5">
-                    <div class="image-blog">
-                        <img src="images/blog_2.jpg" alt="" class="img-fluid">
-                    </div>
-                    <div class="course-br">
-                        <div class="course-title">
-                            <h2><a href="course-single.html" title="">Hotel Management</a></h2>
+                                            <!-- TODO: Create and update modal will be used jointly -->
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="updateModal<%=i%>" tabindex="-1" role="dialog"
+                                                 aria-labelledby="updateModalLabel<%=i%>" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <form method="post" action="/courses/edit" class="modal-content">
+                                                        <input type="hidden" value="<%= courses[i]._id %>" name="id"/>
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit Course</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <label for="title">Title:*</label>
+                                                                <input type="text" id="title" name="title" class="form-control" value="<%= courses[i].title %>"
+                                                                       required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="short_description">Short Description:*</label>
+                                                                <textarea id="short_description" name="short_description"
+                                                                          class="form-control" required><%= courses[i].short_description %></textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="long_description">Long Description:*</label>
+                                                                <textarea id="long_description" name="long_description"
+                                                                          class="form-control" required><%= courses[i].long_description %></textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="price">Price:</label>
+                                                                <input type="number" id="price" name="price" value="<%= courses[i].price %>" class="form-control">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="category">Category:*</label>
+                                                                <select id="category" name="category" class="form-control">
+                                                                    <!-- Populate the options with categories from the server -->
+                                                                    <% categories.forEach(function(category) { %>
+                                                                        <option <%= courses[i].category._id.toString() === category._id.toString() ? 'selected' : '' %>
+                                                                                value="<%= category._id %>">
+                                                                            <%= category.title %>
+                                                                        </option>
+                                                                    <% }); %>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                                            </button>
+                                                            <input type="submit" class="btn btn-primary" value="Edit"/>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <form action="/courses/delete" method="POST">
+                                                <input type="hidden" name="id" value="<%= courses[i]._id %>"/>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="blog-desc">
-                            <p>Lorem ipsum door sit amet, fugiat deicata avise id cum, no quo maiorum intel ogrets
-                                geuiat operts elicata libere avisse id cumlegebat, liber regione eu sit.... </p>
-                        </div>
                     </div>
-                </div>
-            </div><!-- end col -->
-            <div class="col-lg-6 col-md-6 col-12">
-                <div class="course-item mb-5">
-                    <div class="image-blog">
-                        <img src="images/blog_2.jpg" alt="" class="img-fluid">
-                    </div>
-                    <div class="course-br">
-                        <div class="course-title">
-                            <h2><a href="course-single.html" title="">Hotel Management</a></h2>
-                        </div>
-                        <div class="blog-desc">
-                            <p>Lorem ipsum door sit amet, fugiat deicata avise id cum, no quo maiorum intel ogrets
-                                geuiat operts elicata libere avisse id cumlegebat, liber regione eu sit.... </p>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- end col -->
-            <div class="col-lg-6 col-md-6 col-12">
-                <div class="course-item mb-5">
-                    <div class="image-blog">
-                        <img src="images/blog_2.jpg" alt="" class="img-fluid">
-                    </div>
-                    <div class="course-br">
-                        <div class="course-title">
-                            <h2><a href="course-single.html" title="">Hotel Management</a></h2>
-                        </div>
-                        <div class="blog-desc">
-                            <p>Lorem ipsum door sit amet, fugiat deicata avise id cum, no quo maiorum intel ogrets
-                                geuiat operts elicata libere avisse id cumlegebat, liber regione eu sit.... </p>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- end col -->
+                </div><!-- end col -->
+                <% } %>
+            <% } %>
         </div><!-- end row -->
     </div><!-- end container -->
 </div><!-- end section -->

@@ -21,6 +21,46 @@ exports.createCourse = async (req, res) => {
     }
 }
 
+exports.deleteCourse = async (req, res) => {
+    try {
+        const course = await Course.findByIdAndDelete(req.body.id);
+        res.status(200).json({
+            status: 'success',
+            data: course,
+            message: 'Course deleted successfully'
+        });
+    } catch (err) {
+        res.status(400).json({
+            status: 'fail',
+            message: err.message
+        });
+    }
+}
+
+exports.editCourse = async (req, res) => {
+    try {
+        const {id, title, short_description, long_description, price, category} = req.body;
+        const course = await Course.findById(id);
+        course.title = title;
+        course.short_description = short_description;
+        course.long_description = long_description;
+        course.category = category;
+        course.price = price;
+        course.save();
+
+        res.status(200).json({
+            status: 'success',
+            data: course,
+            message: 'Course edited successfully'
+        });
+    } catch (err) {
+        res.status(400).json({
+            status: 'fail',
+            message: err.message
+        });
+    }
+}
+
 exports.getAllCourses = async (req, res) => {
     try {
         const categorySlug = req.query.category;
