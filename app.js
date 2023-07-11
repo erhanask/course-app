@@ -9,6 +9,7 @@ const pageRoutes = require('./routes/pageRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const userRoutes = require('./routes/userRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 // Defining Variables
 const app = express();
@@ -60,6 +61,7 @@ app.use('/', pageRoutes);
 app.use('/courses', courseRoutes );
 app.use('/categories', categoryRoutes );
 app.use('/user', userRoutes);
+app.use('/admin', adminRoutes);
 
 // Start Connection
 app.listen(port, () => {

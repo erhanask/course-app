@@ -1,0 +1,37 @@
+<%- include('../partials/login-header'); %>
+
+<div class="all-title-box">
+    <div class="container text-center">
+        <h1>Admin<span class="m_1">Keep Your Site Managed</span></h1>
+        <h3 class="text-light"><b>Welcome Admin, <%= user.name %></b>.</h3>
+    </div>
+</div>
+
+<div id="overviews" class="section wb">
+    <div class="container">
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (let i=0; i < users.length; i++) { %>
+            <tr>
+                <th scope="row"><%= i+1 %></th>
+                <td><%= users[i].name %></td>
+                <td><%= users[i].email %></td>
+                <td>
+
+                </td>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div><!-- end container -->
+</div><!-- end section -->
+
+<%- include('../partials/login-footer'); %>
