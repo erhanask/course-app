@@ -25,7 +25,10 @@
                 <td><%= users[i].name %></td>
                 <td><%= users[i].email %></td>
                 <td>
-
+                    <form action="/admin/user/delete" method="POST">
+                        <input type="hidden" name="id" value="<%= users[i]._id %>"/>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
             <% } %>

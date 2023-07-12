@@ -30,6 +30,22 @@ exports.createUser = async (req, res) => {
     }
 }
 
+exports.deleteUser = async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.body.id);
+        res.status(200).json({
+            status: 'success',
+            data: user,
+            message: 'User deleted successfully'
+        });
+    } catch (err) {
+        res.status(400).json({
+            status: 'fail',
+            message: err.message
+        });
+    }
+}
+
 exports.loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
